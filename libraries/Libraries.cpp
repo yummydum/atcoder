@@ -1,13 +1,20 @@
 #include <bits/stdc++.h>
-#define rep(i, c) for (int i = 0; i < (int)c; i++)
-#define _GLIBCXX_DEBUG
 using namespace std;
+using ll = long long;
+#define _GLIBCXX_DEBUG
+#define rep(i, c) for (int i = 0; i < (int)c; i++)
+#define debug(x) cout << #x << " = " << x << endl
+#define print(x) cout << x << endl;
 
 int main()
 {
 }
 
 // vector<vector<要素の型>> 変数名(要素数1, vector<要素の型>(要素数2, 初期値))
+
+// double プリントするやつ
+// cout << fixed << setprecision(10);
+// cout << ans << endl;
 
 int sumOfDigits(int n)
 {
