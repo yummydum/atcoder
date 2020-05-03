@@ -5,16 +5,24 @@ using ll = long long;
 #define rep(i, c) for (int i = 0; i < (int)c; i++)
 #define debug(x) cout << #x << " = " << x << endl
 #define print(x) cout << x << endl;
+const ll MOD = 1000000007;
 
 int main()
 {
 }
 
 // vector<vector<要素の型>> 変数名(要素数1, vector<要素の型>(要素数2, 初期値))
+int N = 10;
+vector<vector<int>> table(N, vector<int>(N, 0));
 
 // double プリントするやつ
 // cout << fixed << setprecision(10);
 // cout << ans << endl;
+
+// int max_col = *max_element(color.begin(), color.end());
+
+vector<int> dx = {1, 0, -1, 0};
+vector<int> dy = {0, 1, 0, -1};
 
 int sumOfDigits(int n)
 {
@@ -39,6 +47,10 @@ void bitSearch(int n)
             }
         }
     }
+}
+
+void shakutori()
+{
 }
 
 struct UnionFind

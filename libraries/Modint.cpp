@@ -7,13 +7,13 @@ using ll = long long;
 #define print(x) cout << x << endl;
 const int MOD = 1000000007;
 
-int modPow(ll a, ll n, ll p)
+ll modPow(ll a, ll n, ll p)
 {
     if (n == 1)
         return a % p;
     if (n % 2 == 1)
         return (a * modPow(a, n - 1, p)) % p;
-    long long t = modPow(a, n / 2, p);
+    ll t = modPow(a, n / 2, p);
     return (t * t) % p;
 }
 
@@ -32,6 +32,18 @@ ll modInv(ll a, ll p)
     if (u < 0)
         u += p;
     return u;
+}
+
+ll modComb(ll n, ll r, ll p)
+{
+    ll ans = 1;
+    for (ll i = 1; i <= r; i++)
+    {
+        ans = (ans * (n - i + 1)) % p;
+        ans = (ans * modInv(i, p)) % p;
+    }
+
+    return ans;
 }
 
 // modint: mod 計算を int を扱うように扱える構造体
