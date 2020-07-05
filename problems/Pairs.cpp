@@ -9,47 +9,113 @@ const ll MOD = 1000000007;
 
 int main()
 {
-    ll N, K;
+
+    ll N, K, n_m, n_0, n_p, nn_m, nn_0, nn_p;
     cin >> N >> K;
-    vector<ll> A;
 
-    int neg = 0;
-    int zeros = 0;
-    int pos = 0;
-
+    vector<ll> A(N);
     rep(i, N)
     {
-        ll temp;
-        cin >> temp;
-        A.push_back(temp);
-
-        if (temp < 0)
-        {
-            neg++;
-        }
-        else if (temp == 0)
-        {
-            zeros++;
-        }
-        else
-        {
-            pos++;
-        }
+        cin >> A[i];
     }
 
     sort(A.begin(), A.end());
 
-    ll negative_pairs = ((neg + pos) * (neg + pos - 1)) / 2;
-    ll positive_pairs = (neg * (neg - 1) + pos * (pos - 1));
+    n_m = lower_bound(A.begin(), A.end(), 0) - A.begin();
+    n_0 = (upper_bound(A.begin(), A.end(), 0) - A.begin()) - n_m;
+    n_p = N - n_m - n_0;
+    nn_m = n_m * n_p;
+    nn_0 = pow(n_0, 2) + (n_0 * (A.size() - n_0) / 2);
+    nn_p = pow(N, 2) - nn_m - nn_0;
 
-    if (negative_pairs <= K)
+    if (K <= n_m)
     {
+        bool check_minus(ll x)
+        {
+            // K番目の数がx(<0)以下かどうか
+
+            // A[i] * A[j] <= x / A[i]
+            // A[i+1] * A[j] <= x / A[i+1]
+            // abs(A[i]) >= abs(A[i+1])
+            // ------0000000++++++++++++
+            // i               jjjjjjjjj
+            //  i                 jjjjjj
+            //   i                   jjj
+
+            // x以下の積が何個あるかを数える
+            ll j = n_m + n_0;
+            ll count = 0;
+            rep(i, n_m)
+            {
+                while (A[i] * A[j] > x && j < N)
+                {
+                    j++;
+                }
+                count += j - n_m - n_0;
+            }
+            return count >= K;
         }
-    else if (K < negative_pairs + zeros)
+
+        ll lb = 0;
+        ll ub = pow(*max_element(A.begin(), A.end()), 2);
+        while (ub - lb > 1)
+        {
+            ll mid = (ub + lb) / 2;
+            if (check_minus(mid))
+            {
+                ub = mid;
+            }
+            else
+            {
+                lb = mid;
+            }
+        }
+
+        ans = mid;
+    }
+    else if (K <= nn_m + nn_0)
     {
-        cout << 0 << endl;
+        ans = 0;
     }
     else
     {
+        bool check_plus(ll x)
+        {
+            // K番目の数がx(>0)以下かどうか
+            // b [++++++++++++++++++++++++]
+            //    ijjjjjjjjjjjj
+            //     ijjjjjjjj
+            //      ijjjjj
+            //       ijj
+            // b[i] * b[j] <= x
+            // b[j] <= x / b[i]
+            // b[j] <= x / b[i+1]
+            // iが増加するにつれjは減少する必要がある
+
+            // x以下の積が何個あるかを数える
+            ll count = nn_m + nn_0;
+            for (ll i = n_m + n_0; i < N; i++)
+            {
+                count += j - i;
+            }
+            return count;
+        }
+
+        ll lb = 0;
+        ll ub = pow(*max_element(A.begin(), A.end()), 2);
+        while (ub - lb > 1)
+        {
+            ll mid = (ub + lb) / 2;
+            if (check_plus(mid))
+            {
+                ub = mid;
+            }
+            else
+            {
+                lb = mid;
+            }
+        }
+
+        ans = mid;
     }
 }

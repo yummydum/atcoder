@@ -19,8 +19,6 @@ vector<vector<int>> table(N, vector<int>(N, 0));
 // cout << fixed << setprecision(10);
 // cout << ans << endl;
 
-// int max_col = *max_element(color.begin(), color.end());
-
 vector<int> dx = {1, 0, -1, 0};
 vector<int> dy = {0, 1, 0, -1};
 
@@ -38,20 +36,22 @@ int sumOfDigits(int n)
 // n個の要素の組み合わせを列挙する
 void bitSearch(int n)
 {
-    for (int bit = 0; bit < (1 << n); ++bit) // 1を左にnbitシフトする; 2^n
+    for (int bit = 0; bit < (1 << n); ++bit) // 0から2^nまでのintの上をループ
     {
-        for (int i = 0; i < n; ++i) // n個の要素の上をループ
+        for (int i = 0; i < n; ++i) // 0からnまでのintの上をループ
         {
-            if (bit & (1 << i)) // &はbitwiseAND,i個目の要素を選択するか否かのbool
+            if (bit & (1 << i)) // もしbitで表される組(001011101)の内i番目の要素にフラグが立っているならば, という意味
             {
             }
         }
     }
 }
 
-void shakutori()
-{
-}
+// Examples
+// UnionFind u = UnionFind(10)
+// u.unite(1,2)
+// u.unite(5,3)
+// u,unite(9,1)
 
 struct UnionFind
 {
@@ -60,7 +60,7 @@ struct UnionFind
     vector<int> size;   // size of the tree whose root is the ith element (optional)
 
     // Constructer
-    UnionFind(int n)
+    UnionFind(int n) // n: number of nodes
     {
         for (int i = 0; i < n; i++)
         {
